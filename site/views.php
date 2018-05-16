@@ -1,7 +1,5 @@
 <?php
 
-require_once "PhpFrameworkZero/template.php";
-
 $index_view = function($scope) {
 	echo "Home page";
 	return true;
