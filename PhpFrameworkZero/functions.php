@@ -33,7 +33,7 @@ function multiexplode ($delimiters,$string) {
  * @param string $string string that starts with the previous param.
  */
 function startswith($with, $string) {
-	return strpos($with, $string) === 0;
+	return strpos($string, $with) === 0;
 }
 
 ?>
