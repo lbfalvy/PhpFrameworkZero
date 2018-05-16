@@ -1,6 +1,6 @@
 <?php
 
-require_once("PhpFrameworkZero/routing.class.php");
+require_once("PhpFrameworkZero/PathRouter.php");
 
 return new PathRouter([
 	"" => require("site/routing.php"),

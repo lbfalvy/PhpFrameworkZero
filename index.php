@@ -1,7 +1,7 @@
 <?php
 
 require_once "config.php";
-require_once "PhpFrameworkZero/routing.class.php";
+require_once "PhpFrameworkZero/PathRouter.php";
 require_once "PhpFrameworkZero/functions.php";
 
 // Error log, if debug.
