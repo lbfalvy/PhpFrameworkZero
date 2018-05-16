@@ -27,4 +27,13 @@ function multiexplode ($delimiters,$string) {
 	return  $launch;
 }
 
+/**
+ * Returns bool if string2 starts with string1
+ * @param string $with string to start with
+ * @param string $string string that starts with the previous param.
+ */
+function startswith($with, $string) {
+	return strpos($with, $string) === 0;
+}
+
 ?>
