@@ -15,7 +15,8 @@ $projects_view = function($scope) {
 $single_project_view = function($scope) {
 	$template = new Template("project.html");
 	$template->context = [
-		"proj" => $scope["matches"]["project"]
+		"proj" => $scope["matches"]["project"],
+		"progress" => isset($_GET["wip"]) ? $_GET["wip"] : null,
 	];
 	$template->execute();
 	return true;
