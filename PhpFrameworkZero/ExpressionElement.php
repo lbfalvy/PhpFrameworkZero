@@ -14,14 +14,14 @@ require_once "PhpFrameworkZero/TemplateElement.php";
  */
 class ExpressionElement extends TemplateElement {
 	private $name;
-	function __construct($string) {
+	public function __construct($string) {
 		$matches = array();
 		if (preg_match('/^\s*\$(?P<name>[a-zA-Z0-9_]+)\s*$/', $string, $matches) === 0) {
 			throw new Exception("Expression not supported: [".$string."]");
 		}
 		$this->name = $matches["name"];
 	} // TODO implement this; given expression as string
-	function execute($context) {
+	public function execute($context) {
 		return $context[$this->name];
 	} // TODO implement this; returns result as string
 }

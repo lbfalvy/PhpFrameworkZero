@@ -5,10 +5,10 @@ require_once "PhpFrameworkZero/ExpressionElement.php";
 
 class EchoElement extends TemplateElement {
 	private $expression;
-	function __construct($string) {
-		$this->expression = new ExpressionElement($string);
+	public function __construct($expression) {
+		$this->expression = $expression;
 	}
-	function execute($context) {
+	public function execute($context) {
 		return $this->expression->execute($context);
 	}
 }

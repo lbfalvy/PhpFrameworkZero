@@ -14,7 +14,7 @@ class PathRouter {
 	 * The array should be in the form of "path expression" => action
 	 * where action is a function or a {@link PathRouter}
 	 */
-	function __construct( $in_array ) {
+	public function __construct( $in_array ) {
 		$temp = array();
 		foreach ($in_array as $in_path => $in_action) {
 			// preg_quote for escaping regex
@@ -44,7 +44,7 @@ class PathRouter {
 	 * @param	array	$scope	The scope to operate on. See the scope specification.
 	 * @return	mixed	The return value of the handler, or boolean false if no handler matched.
 	 */
-	function execute($scope) {
+	public function execute($scope) {
 		$path = $scope["path"];
 		foreach ($this->paths as $regex => $handler) {
 			if ($this->preg_match_path($regex, $path, $scope["matches"], $scope["path"])) {
