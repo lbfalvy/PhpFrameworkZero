@@ -86,19 +86,27 @@ class Template {
 				$element = new EchoElement($expression);
 			}
 			// Recognizing if statements
-			else if (startswith("if ", $array[$offset])) {
+			else if ( startswith("if ", $array[$offset]) ) {
 				// Gettihg the part after if (the condition) and turning it into an expression
 				$expstr = substr($array[$offset], 3);
 				$expression = new ExpressionElement($expstr);
 				// Parsing the block, which ends at the first endif
 				// (recursion ensures that it's not another if's endif)
 				++$offset;
-				$tasks = $this->parseCommands($array, IfElement::END, $offset);
+				$block = $this->parseCommands($array, IfElement::END, $offset);
 				// Creating the if element
-				$element = new IfElement($expression, $tasks);
+				$element = new IfElement($expression, $block);
 			}
 			// Recognizing endif statements, no further logic required
 			else if ( "endif" == $array[$offset] ) $element = IfElement::END;
+			else if ( "else" == $array[$offset] ) $element = new ElseElement();
+			else if ( startswith("elsif ", $array[$offset]) ) {
+				// Gettihg the part after elsif (the condition) and turning it into an expression
+				$expstr = substr($array[$offset], 6);
+				$expression = new ExpressionElement($expstr);
+				// Creating the elsif element
+				$element = new ElsifElement($expression);
+			}
 			else throw new Exception("Unknown block type: [".$array[$offset]."]");
 		}
 		return $element;
