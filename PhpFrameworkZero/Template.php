@@ -120,7 +120,6 @@ class Template {
 	 * @param array $context will OVERRIDE existing context.
 	 */
 	public function execute($context = null) {
-		//print_r($this->components);
 		if ($context == null) $context = $this->context;
 		foreach ($this->components as $component) {
 			echo $component->execute($context);
