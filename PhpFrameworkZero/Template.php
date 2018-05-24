@@ -5,6 +5,7 @@ require_once "PhpFrameworkZero/PlainTextElement.php";
 require_once "PhpFrameworkZero/ExpressionElement.php";
 require_once "PhpFrameworkZero/EchoElement.php";
 require_once "PhpFrameworkZero/IfElement.php";
+require_once "PhpFrameworkZero/ForeachElement.php";
 
 /**
  * Parses and executes html templates.
@@ -111,6 +112,29 @@ class Template {
 
 				// Creating the elsif element
 				$element = new ElsifElement($expression);
+			}
+			// syntax is foreach expression as iterator
+			// iterator is a single variable name
+			else if ( startswith("foreach ", $array[$offset]) ) {
+				// string is everything but the foreach
+				$string = substr($array[$offset], 8);
+				// matches anything in the form " as $varname_123" and captures "varname_123"
+				$regex = '/\s+as\s+\$(?P<iterator>[a-zA-Z0-9_]+)\s*$/';
+				if (preg_match($regex, $string, $matches) === 0) {
+					throw new Exception("Invalid foreach syntax: [".$string."]");
+				}
+				// iterator is varname_123 (without the dollar sign)
+				$iterator = $matches["iterator"];
+				// anything that the regex didn't match must be the expression
+				$expstr = substr($string, 0, strlen($matches[0]));
+				$expression = new ExpressionElement($expstr);
+
+				// block, like in the if
+				++$offset;
+				$block = $this->parseCommands($array, ForeachElement::END, $offset);
+
+				// creating the foreach element
+				$element = new ForeachElement($iterator, $expression, $block);
 			}
 			else throw new Exception("Unknown block type: [".$array[$offset]."]");
 		}
