@@ -28,7 +28,7 @@ $projects = [
 
 // execute a template in one row
 $index_view = function($scope) {
-	Template::render("home.html");
+	Template::render("home.php");
 	return true;
 };
 
@@ -41,22 +41,21 @@ $projects_view = function($scope) {
 	foreach ($projects as $proj) {
 		array_push($context["projects"], $proj["name"]);
 	}
-	Template::render("projects.html", $context);
+	Template::render("projects.php", $context);
 	return true;
 };
 
 $single_project_view = function($scope) {
-	$template = new Template("project.html");
 	global $projects;
 	foreach ($projects as $proj) {
 		if ($proj["name"] != $scope["matches"]["project"]) continue;
-		$template->context = [
+		$context = [
 			"proj" => $proj["name"],
 			"progress" => $proj["finished"],
 			"abandoned" => $proj["abandoned"],
 			"complete" => $proj["finished"] == 100,
 		];
-		$template->execute();
+		Template::render("project.php", $context);
 		return true;
 	}
 	echo "project not found";

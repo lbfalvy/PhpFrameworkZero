@@ -24,5 +24,4 @@ $scope = [
 	"matches" => array(),
 ];
 if (!$router->execute($scope)) echo "404";
-
 ?>
