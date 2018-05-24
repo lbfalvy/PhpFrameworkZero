@@ -71,6 +71,7 @@ class Template {
 		if ($offset%2 == 0) {
 			// Getting the entire plain text that we want to see in the result unchanged
 			$text = $array[$offset];
+
 			// And turning it into a TemplateElement, because serialization
 			$element = new PlainTextElement($text);
 		}
@@ -82,6 +83,7 @@ class Template {
 				// Getting the part after echo and turning it into an expression
 				$string = substr($array[$offset], 5);
 				$expression = new ExpressionElement($string);
+
 				// Creating the echo element
 				$element = new EchoElement($expression);
 			}
@@ -90,10 +92,12 @@ class Template {
 				// Gettihg the part after if (the condition) and turning it into an expression
 				$expstr = substr($array[$offset], 3);
 				$expression = new ExpressionElement($expstr);
+
 				// Parsing the block, which ends at the first endif
 				// (recursion ensures that it's not another if's endif)
 				++$offset;
 				$block = $this->parseCommands($array, IfElement::END, $offset);
+
 				// Creating the if element
 				$element = new IfElement($expression, $block);
 			}
@@ -104,6 +108,7 @@ class Template {
 				// Gettihg the part after elsif (the condition) and turning it into an expression
 				$expstr = substr($array[$offset], 6);
 				$expression = new ExpressionElement($expstr);
+
 				// Creating the elsif element
 				$element = new ElsifElement($expression);
 			}
@@ -132,6 +137,10 @@ class Template {
 		foreach ($this->components as $component) {
 			echo $component->execute($context);
 		}
+	}
+	public static function render($filename, $context=array()) {
+		$template = new Template($filename, $context);
+		$template->execute();
 	}
 }
 
