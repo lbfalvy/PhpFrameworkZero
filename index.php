@@ -1,8 +1,6 @@
 <?php
 
 require_once "config.php";
-require_once "PhpFrameworkZero/PathRouter.php";
-require_once "PhpFrameworkZero/functions.php";
 
 // Error log, if debug.
 if ($DEBUG) {
@@ -11,7 +9,15 @@ if ($DEBUG) {
 	error_reporting(E_ALL);
 }
 
-$router = require("routing.php");
+require_once "PhpFrameworkZero/PathRouter.php";
+require_once "PhpFrameworkZero/functions.php";
+require_once "PhpFrameworkZero/static_views.php";
+
+$router = new PathRouter([
+	$STATIC_PATH."/<string:filename>" => $static_base,
+	$STATIC_PATH."/<string:namespace>/<string:filename>" => $static_namespaced,
+	"" => require("routing.php"),
+]);
 
 /**
  * SCOPE specification
@@ -24,4 +30,3 @@ $scope = [
 	"matches" => array(),
 ];
 if (!$router->execute($scope)) echo "404";
-?>

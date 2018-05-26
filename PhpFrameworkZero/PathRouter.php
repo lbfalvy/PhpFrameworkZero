@@ -69,7 +69,7 @@ class PathRouter {
 			$regex = "(?P<".$matches["var_name"][$i].">";
 			switch ($matches["var_type"][$i]) {
 				case 'string':
-					$regex .= "[a-zA-Z0-9_]+";
+					$regex .= "[a-zA-Z0-9_\\.\\-]+";
 					break;
 				case 'int':
 					$regex .= "[0-9]+";
