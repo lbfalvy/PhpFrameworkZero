@@ -35,5 +35,8 @@ function multiexplode ($delimiters,$string) {
 function startswith($with, $string) {
 	return strpos($string, $with) === 0;
 }
+function endswith($with, $string) {
+	return strpos($string, $with) === strlen($string)-strlen($with);
+}
 
 ?>
